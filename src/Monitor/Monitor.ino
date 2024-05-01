@@ -1,6 +1,6 @@
 #include <AnalogSensor.h>
 #include <EasyButton.h>
-#include "LCD1602Display.h" // Include your new display class
+#include <LCD1602Display.h> // Include your new display class
 
 #define BUTTON1_PIN 3
 #define BUTTON2_PIN 4
