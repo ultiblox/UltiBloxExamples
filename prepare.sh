@@ -26,6 +26,7 @@ bash prepare-libraries.sh
 
 # Install remaining libraries through Arduino CLI
 arduino-cli lib install "EasyButton"
+arduino-cli lib install "SensorAnalog"
 
 # Verify installed libraries
 arduino-cli lib list
