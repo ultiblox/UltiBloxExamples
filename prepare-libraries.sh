@@ -9,16 +9,17 @@ install_library() {
   if [ ! -d "$LIBRARY_PATH" ]; then
     echo "Cloning $LIBRARY_NAME into Arduino libraries folder..."
     git clone "$GIT_URL" "$LIBRARY_PATH"
+    
+
+    # Run prepare.sh if it exists
+    if [ -f "$LIBRARY_PATH/prepare.sh" ]; then
+      echo "Running $LIBRARY_NAME prepare script..."
+      bash "$LIBRARY_PATH/prepare.sh"
+    else
+      echo "No prepare script found for $LIBRARY_NAME."
+    fi
   else
     echo "$LIBRARY_NAME already exists, skipping clone."
-  fi
-
-  # Run prepare.sh if it exists
-  if [ -f "$LIBRARY_PATH/prepare.sh" ]; then
-    echo "Running $LIBRARY_NAME prepare script..."
-    bash "$LIBRARY_PATH/prepare.sh"
-  else
-    echo "No prepare script found for $LIBRARY_NAME."
   fi
 }
 
