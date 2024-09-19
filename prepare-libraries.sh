@@ -1,25 +1,25 @@
 #!/bin/bash
 
-# Define the Arduino libraries folder
-LIBRARY_PATH1="$HOME/Arduino/libraries/LCDI2C"
-LIBRARY_PATH2="$HOME/Arduino/libraries/SensorAnalog"
+# Function to clone libraries if not already present
+install_library() {
+  local LIBRARY_NAME="$1"
+  local LIBRARY_PATH="$HOME/Arduino/libraries/$LIBRARY_NAME"
+  local GIT_URL="$2"
 
-# Check if LCDI2C is already present
-if [ ! -d "$LIBRARY_PATH1" ]; then
-    echo "Cloning LCDI2C library into Arduino libraries folder..."
-    git clone https://github.com/makers-multiverse/LCDI2C.git "$LIBRARY_PATH1"
-else
-    echo "LCDI2C library already exists, skipping clone."
-fi
+  if [ ! -d "$LIBRARY_PATH" ]; then
+    echo "Cloning $LIBRARY_NAME into Arduino libraries folder..."
+    git clone "$GIT_URL" "$LIBRARY_PATH"
+  else
+    echo "$LIBRARY_NAME already exists, skipping clone."
+  fi
+}
 
-# Check if SensorAnalog is already present
-if [ ! -d "$LIBRARY_PATH2" ]; then
-    echo "Cloning SensorAnalog library into Arduino libraries folder..."
-    git clone https://github.com/makers-multiverse/SensorAnalog.git "$LIBRARY_PATH2"
-else
-    echo "SensorAnalog library already exists, skipping clone."
-fi
+# Install all necessary libraries
+install_library "LCDI2C" "https://github.com/makers-multiverse/LCDI2C.git"
+install_library "SensorAnalog" "https://github.com/makers-multiverse/SensorAnalog.git"
+install_library "DisplayValueCommon" "https://github.com/makers-multiverse/DisplayValueCommon.git"
+install_library "DisplayValueLCD" "https://github.com/makers-multiverse/DisplayValueLCD.git"
+install_library "DisplayValueOLED" "https://github.com/makers-multiverse/DisplayValueOLED.git"
 
-# Add other necessary libraries as required
-
+# Finish
 echo "Library preparation complete."
