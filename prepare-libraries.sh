@@ -15,14 +15,17 @@ install_library() {
   fi
   
   
-    # Run prepare.sh if it exists
-    if [ -f "$LIBRARY_PATH/prepare.sh" ]; then
-      echo "Running $LIBRARY_NAME prepare script..."
-      bash "$LIBRARY_PATH/prepare.sh"
-    else
-      echo "No prepare script found for $LIBRARY_NAME."
-    fi
+  #  # Run prepare.sh if it exists
+  #  if [ -f "$LIBRARY_PATH/prepare.sh" ]; then
+  #    echo "Running $LIBRARY_NAME prepare script..."
+  #    bash "$LIBRARY_PATH/prepare.sh"
+  #  else
+  #    echo "No prepare script found for $LIBRARY_NAME."
+  #  fi
 }
+
+
+arduino-cli lib install "U8g2"  # U8x8lib.h is part of the U8g2 library
 
 # Install all necessary libraries
 install_library "LCDI2C" "https://github.com/makers-multiverse/LCDI2C.git"
