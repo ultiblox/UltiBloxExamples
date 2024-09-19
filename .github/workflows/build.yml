@@ -3,10 +3,10 @@ name: Arduino Library CI
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -20,6 +20,10 @@ jobs:
       run: |
         curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
         sudo mv bin/arduino-cli /usr/local/bin/
+
+    - name: Prepare environment
+      run: |
+        bash prepare.sh
 
     - name: Install Arduino AVR Core
       run: |
