@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Function to clone libraries if not already present
+# Function to clone libraries if not already present and run their prepare scripts
 install_library() {
   local LIBRARY_NAME="$1"
   local LIBRARY_PATH="$HOME/Arduino/libraries/$LIBRARY_NAME"
@@ -11,6 +11,14 @@ install_library() {
     git clone "$GIT_URL" "$LIBRARY_PATH"
   else
     echo "$LIBRARY_NAME already exists, skipping clone."
+  fi
+
+  # Run prepare.sh if it exists
+  if [ -f "$LIBRARY_PATH/prepare.sh" ]; then
+    echo "Running $LIBRARY_NAME prepare script..."
+    bash "$LIBRARY_PATH/prepare.sh"
+  else
+    echo "No prepare script found for $LIBRARY_NAME."
   fi
 }
 
