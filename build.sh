@@ -11,7 +11,7 @@ then
 fi
 
 # Compile the sketch
-arduino-cli compile --fqbn $BOARD_TYPE src/Monitor
+arduino-cli compile --fqbn $BOARD_TYPE --libraries "~/Arduino/libraries" src/Monitor
 
 # Check if the compilation was successful
 if [ $? -eq 0 ]; then
