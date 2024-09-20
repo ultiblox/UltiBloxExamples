@@ -13,8 +13,7 @@ install_library() {
   else
     echo "$LIBRARY_NAME already exists, skipping clone."
   fi
-  
-  
+
   #  # Run prepare.sh if it exists
   #  if [ -f "$LIBRARY_PATH/prepare.sh" ]; then
   #    echo "Running $LIBRARY_NAME prepare script..."
@@ -24,7 +23,6 @@ install_library() {
   #  fi
 }
 
-
 arduino-cli lib install "U8g2"  # U8x8lib.h is part of the U8g2 library
 
 # Install all necessary libraries
@@ -33,6 +31,7 @@ install_library "SensorAnalog" "https://github.com/makers-multiverse/SensorAnalo
 install_library "DisplayValueCommon" "https://github.com/makers-multiverse/DisplayValueCommon.git"
 install_library "DisplayValueLCD" "https://github.com/makers-multiverse/DisplayValueLCD.git"
 install_library "DisplayValueOLED" "https://github.com/makers-multiverse/DisplayValueOLED.git"
+install_library "SerialLogger" "https://github.com/makers-multiverse/SerialLogger.git"
 
 # Finish
 echo "Library preparation complete."
