@@ -3,7 +3,7 @@
 # Set the board type (e.g., arduino:avr:uno or esp32:esp32:esp32)
 BOARD_TYPE="arduino:avr:uno"
 
-# Compile the Monitor.ino sketch using Arduino CLI
+# Compile the Sense-and-Display.ino sketch using Arduino CLI
 if ! command -v arduino-cli &> /dev/null
 then
     echo "arduino-cli not found. Please install it from https://arduino.github.io/arduino-cli/installation/"
@@ -11,7 +11,7 @@ then
 fi
 
 # Compile the sketch
-arduino-cli compile --fqbn $BOARD_TYPE --libraries "~/Arduino/libraries" src/Monitor
+arduino-cli compile --fqbn $BOARD_TYPE --libraries "~/Arduino/libraries" examples/Sense-and-Display/Sense-and-Display.ino
 
 # Check if the compilation was successful
 if [ $? -eq 0 ]; then
