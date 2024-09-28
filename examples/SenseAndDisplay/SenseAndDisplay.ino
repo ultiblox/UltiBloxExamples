@@ -22,7 +22,7 @@ EasyButton button2(BUTTON2_PIN);        // Use BUTTON2_PIN from ButtonConfig.h
 
 void setup() {
     Logger.init(115200);  // Initialize Serial communication
-    Logger.logln("Starting...");
+    Logger.infoln("Starting...");
 
     // Sensor configuration
     SensorAnalog.setInterval(READING_INTERVAL);
@@ -37,10 +37,10 @@ void setup() {
 
     // Initialize the display
     #if ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_LCD
-        Logger.logln("Display type: LCD");
+        Logger.debugln("Display type: LCD");
         display.init();
     #elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_OLED
-        Logger.logln("Display type: OLED");
+        Logger.debugln("Display type: OLED");
         display.init();
     #endif
 
@@ -63,7 +63,7 @@ void loop() {
 }
 
 void onPressedCalibrateLow() {
-    Logger.logln("Calibrating sensor low");
+    Logger.debugln("Calibrating sensor low");
 
     int raw = SensorAnalog.readRaw();
     SensorAnalog.setCalibrationLow(raw);
@@ -79,7 +79,7 @@ void onPressedCalibrateLow() {
 }
 
 void onPressedCalibrateHigh() {
-    Logger.logln("Calibrating sensor high");
+    Logger.debugln("Calibrating sensor high");
 
     int raw = SensorAnalog.readRaw();
     SensorAnalog.setCalibrationHigh(raw);
@@ -105,3 +105,4 @@ void handleDataReceived(int value) {
 
     display.setValue(value);
 }
+
