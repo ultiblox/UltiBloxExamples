@@ -1,10 +1,16 @@
+// SensorConfig.h
 #pragma once
 
-// Sensor Pin Configuration
-#define SENSOR_PIN A0             // Pin to which the sensor is connected
+// Define sensor types
+#define SENSOR_TYPE_ANALOG 0 // Analog sensor
 
-// Sensor Label
+#define ACTIVE_SENSOR_TYPE SENSOR_TYPE_ANALOG // Active sensor type
+
 const char* const SENSOR_LABEL = "Light";   // Label for the sensor reading
+const char* const SENSOR_KEY = "L";   // Short key for the sensor reading
 
-// Reading Interval Settings
-#define READING_INTERVAL 1000      // Interval in milliseconds to read sensor data
+#define READING_INTERVAL 500      // Interval between sensor readings (milliseconds)
+
+#define SENSOR_PIN A0
+
+

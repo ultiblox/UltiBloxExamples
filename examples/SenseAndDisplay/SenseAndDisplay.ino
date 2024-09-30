@@ -59,50 +59,67 @@ void loop() {
 
     SensorAnalog.loop();
 
+    Logger.debug("Loop: ");
+    Logger.debugln(i);
+    i++;
+
     delay(1000);
 }
 
 void onPressedCalibrateLow() {
-    Logger.debugln("Calibrating sensor low");
-
     int raw = SensorAnalog.readRaw();
+    
+    Logger.info("Calibrating sensor low: ");
+    Logger.infoln(raw);
+    
     SensorAnalog.setCalibrationLow(raw);
 
-    display.setLabel("Low");
-    display.setSuffix(" raw");
-    display.setValue(raw);
+    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
+      display.setLabel("Low");
+      display.setSuffix(" raw");
+      display.setValue(raw);
+    #endif
 
     delay(1000);
 
-    display.setLabel(SENSOR_LABEL);
-    display.setSuffix("%");
+    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
+      display.setLabel(SENSOR_LABEL);
+      display.setSuffix("%");
+    #endif
 }
 
 void onPressedCalibrateHigh() {
-    Logger.debugln("Calibrating sensor high");
-
     int raw = SensorAnalog.readRaw();
+    
+    Logger.info("Calibrating sensor high: ");
+    Logger.infoln(raw);
+    
     SensorAnalog.setCalibrationHigh(raw);
 
-    display.setLabel("High");
-    display.setSuffix(" raw");
-    display.setValue(raw);
+    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
+      display.setLabel("High");
+      display.setSuffix(" raw");
+      display.setValue(raw);
+    #endif
 
     delay(1000);
 
-    display.setLabel(SENSOR_LABEL);
-    display.setSuffix("%");
+    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
+      display.setLabel(SENSOR_LABEL);
+      display.setSuffix("%");
+    #endif
 }
 
 void handleDataReceived(int value) {
     int rawValue = SensorAnalog.readRaw();
 
-    Serial.print(SENSOR_LABEL);
-    Serial.print(": ");
-    Serial.print(value);
-    Serial.print("%, ");
-    Serial.println();
+    Logger.data(SENSOR_LABEL, SENSOR_KEY, value);
+    Logger.data("Raw", "R", rawValue);
+    Logger.dataln();
 
-    display.setValue(value);
+    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
+      display.setValue(value);
+    #endif
 }
+
 
