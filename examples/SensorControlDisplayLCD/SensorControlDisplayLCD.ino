@@ -37,8 +37,10 @@ void setup() {
 
     // Button configuration for calibration
     button1.begin();
+    button1.onPressed(onPressThresholdDown);
     button1.onPressedFor(LONG_PRESS_DURATION, onPressedCalibrateLow);
     button2.begin();
+    button2.onPressed(onPressThresholdUp);
     button2.onPressedFor(LONG_PRESS_DURATION, onPressedCalibrateHigh);
 
     // Initialize ActiveThreshold with values from ThresholdConfig
@@ -65,19 +67,13 @@ void setup() {
     display.setSuffix("%");
 }
 
-int i = 1;
-
 void loop() {
     button1.read();
     button2.read();
 
     SensorAnalog.loop();  // Process sensor data
 
-    Logger.debug("Loop: ");
-    Logger.debugln(i);
-    i++;
-
-    delay(1000);
+    delay(10);
 }
 
 // Calibration for low point
@@ -103,7 +99,6 @@ void onPressedCalibrateLow() {
     #endif
 }
 
-// Calibration for high point
 void onPressedCalibrateHigh() {
     int raw = SensorAnalog.readRaw();
     
@@ -138,6 +133,7 @@ void handleDataReceived(int value) {
     threshold.evaluate(value);
 
     #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
+      display.setLabel(SENSOR_LABEL);
       display.setValue(value);
     #endif
 }
@@ -145,11 +141,37 @@ void handleDataReceived(int value) {
 // Callback to turn on the control (e.g., LED, pump)
 void turnOnControl() {
     digitalWrite(CONTROL_PIN, HIGH);
-    Logger.infoln("Control turned ON (Active)");
+    Logger.infoln("Control ON (Active)");
 }
 
 // Callback to turn off the control
 void turnOffControl() {
     digitalWrite(CONTROL_PIN, LOW);
-    Logger.infoln("Control turned OFF (Inactive)");
+    Logger.infoln("Control OFF (Inactive)");
+}
+
+void onPressThresholdDown() {    
+    threshold.decrementThreshold();
+    
+    showThreshold();  
+}
+
+void onPressThresholdUp() {
+    threshold.incrementThreshold();
+    
+    showThreshold();  
+}
+
+void showThreshold() {
+    int currentThreshold = threshold.getThreshold();
+    
+    Logger.info("Threshold up: ");
+    Logger.infoln(currentThreshold);
+
+    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
+      display.setLabel("Threshold");
+      display.setValue(currentThreshold);
+    #endif
+
+    delay(1000);
 }
