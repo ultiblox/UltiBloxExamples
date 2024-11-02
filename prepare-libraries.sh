@@ -32,7 +32,7 @@ install_library "DisplayValueCommon" "https://github.com/ultiblox/DisplayValueCo
 install_library "DisplayValueLCD" "https://github.com/ultiblox/DisplayValueLCD.git"
 install_library "DisplayValueOLED" "https://github.com/ultiblox/DisplayValueOLED.git"
 install_library "SerialLogger" "https://github.com/ultiblox/SerialLogger.git"
-install_library "SensorAnalog" "https://github.com/ultiblox/ActiveThreshold.git"
+install_library "ActiveThreshold" "https://github.com/ultiblox/ActiveThreshold.git"
 
 # Finish
 echo "Library preparation complete."
