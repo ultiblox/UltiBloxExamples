@@ -14,4 +14,4 @@ For a full installation guide, please see the [Installation Guide](docs/installa
 3. **Customization**: Learn how to configure sensors, displays, buttons, and thresholds by exploring the [Configuration Guides](docs/configuration).
 
 ## License
-This project is licensed under the MIT License.
+[This project is licensed under the UltiBlox License.](https://ultiblox.org/license)
