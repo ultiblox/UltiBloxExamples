@@ -1,6 +1,6 @@
 # Libraries
 
-UniversalMakerBox provides several key libraries that help you manage sensors, displays, and logging in a modular and reusable way:
+UltiBlox provides several key libraries that help you manage sensors, displays, and logging in a modular and reusable way:
 
 ### 1. **SerialLogger**
    - A versatile logging system for sending debug and data logs over Serial.

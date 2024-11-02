@@ -2,11 +2,11 @@
 
 ## 1. Cloning the Repository
 
-To start, clone the UniversalMakerBox repository to your local machine:
+To start, clone the UltiBlox repository to your local machine:
 
 ```bash
-git clone https://github.com/makers-multiverse/UniversalMakerBox.git
-cd UniversalMakerBox
+git clone git@github.com:UltiBlox/UltiBloxExamples.git
+cd UltiBlox
 ```
 
 ## 2. Running the Prepare Script (for Library Installation)
@@ -37,13 +37,13 @@ This is the **easiest option** if you want to use the project without making any
 2. **Clone the Repository Directly into Arduino Libraries Folder**:
 
    ```bash
-   git clone https://github.com/makers-multiverse/UniversalMakerBox.git ~/Arduino/libraries/UniversalMakerBox
+   git clone git@github.com:UltiBlox/UltiBloxExamples.git ~/Arduino/libraries/UltiBlox
    ```
 
 3. **Run the Prepare Script** to install any missing libraries:
 
    ```bash
-   cd ~/Arduino/libraries/UniversalMakerBox
+   cd ~/Arduino/libraries/UltiBlox
    bash prepare.sh
    ```
 
@@ -60,8 +60,8 @@ This mode is best for developers who need to modify the project and test changes
 1. **Clone the Project to a Workspace**:
 
    ```bash
-   git clone https://github.com/makers-multiverse/UniversalMakerBox.git ~/workspace/UniversalMakerBox
-   cd ~/workspace/UniversalMakerBox
+   git clone git@github.com:UltiBlox/UltiBloxExamples.git ~/workspace/UltiBlox
+   cd ~/workspace/UltiBlox
    ```
 
 2. **Create a Symlink to Arduino Libraries Folder**:
@@ -79,8 +79,8 @@ If you're not actively developing but want to install the project from a workspa
 1. **Clone the Project to a Workspace**:
 
    ```bash
-   git clone https://github.com/makers-multiverse/UniversalMakerBox.git ~/workspace/UniversalMakerBox
-   cd ~/workspace/UniversalMakerBox
+   git clone git@github.com:UltiBlox/UltiBloxExamples.git ~/workspace/UltiBlox
+   cd ~/workspace/UltiBlox
    ```
 
 2. **Run the Install Script** to copy the project into the Arduino libraries folder:

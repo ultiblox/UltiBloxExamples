@@ -1,6 +1,6 @@
 # Examples Overview
 
-UniversalMakerBox provides a set of modular examples that demonstrate how to use different hardware configurations, sensor readings, displays, and control mechanisms. Each example is designed to showcase specific features, making it easier for both beginners and experienced users to get started.
+UltiBlox provides a set of modular examples that demonstrate how to use different hardware configurations, sensor readings, displays, and control mechanisms. Each example is designed to showcase specific features, making it easier for both beginners and experienced users to get started.
 
 ### 1. **SensorControl**
    - **Purpose**: Demonstrates how to read data from an analog sensor and control devices (like a pump or LED) based on sensor thresholds.
