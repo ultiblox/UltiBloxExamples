@@ -11,7 +11,6 @@ For a full installation guide, please see the [Installation Guide](docs/installa
 ## Getting Started
 1. **Installation**: Start with the [Installation Guide](docs/installation.md) to set up your environment and get the project running.
 2. **Explore Examples**: Visit the [Examples Overview](docs/examples.md) to see the different sketches and try them out.
-3. **Customization**: Learn how to configure sensors, displays, buttons, and thresholds by exploring the [Configuration Guides](docs/configuration).
 
 ## License
 [This project is licensed under the UltiBlox License.](https://ultiblox.org/license)
