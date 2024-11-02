@@ -1,20 +1,25 @@
-name: Arduino Library CI
+name: Build, Version, and Release
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main  # Trigger on main branch
+
+permissions:
+  contents: write  # Required for tagging and creating releases
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+
+    - name: Set Up Git User
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
     - name: Install Arduino CLI
       run: |
@@ -30,6 +35,42 @@ jobs:
         arduino-cli core update-index
         arduino-cli core install arduino:avr
 
-    - name: Run build script
+    - name: Run Build Script
       run: |
         bash build.sh
+
+    - name: Run Version Increment Script (Only if Build Succeeds)
+      if: ${{ success() }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # Increment version and tag it
+        bash version-increment.sh
+
+    - name: Confirm Version from VERSION File
+      run: |
+        version=$(cat VERSION)
+        echo "Detected version from VERSION file: $version"
+
+    - name: Create GitHub Release
+      if: ${{ success() }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        version=$(cat VERSION)
+        release_name="Release v$version"
+        release_body="Automatic release for version v$version"
+        
+        # Verify if the tag exists on GitHub
+        tag_exists=$(git ls-remote --tags origin refs/tags/v$version)
+        if [ -z "$tag_exists" ]; then
+          echo "Tag v$version not found on GitHub. Exiting release creation."
+          exit 1
+        fi
+        
+        # Create the release if tag exists
+        curl -X POST \
+          -H "Authorization: token $GITHUB_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d "{\"tag_name\":\"v$version\",\"name\":\"$release_name\",\"body\":\"$release_body\",\"draft\":false,\"prerelease\":false}" \
+          https://api.github.com/repos/${{ github.repository }}/releases
