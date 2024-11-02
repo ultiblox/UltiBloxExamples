@@ -32,6 +32,13 @@ void setup() {
 
     // Sensor configuration
     SensorAnalog.setInterval(READING_INTERVAL);
+    SensorAnalog.setCalibrationDefaultHigh(0); // Set calibration defaults
+    SensorAnalog.setCalibrationDefaultLow(1024);
+    // NOTE: Directly setting calibration in code is not recommended. It will overwrite any changes made by the user.
+    // This should generally only be used for testing/debugging, or to reset calibration. For production, only set calibration 'defaults' in code.'
+    // Set calibration in eeprom (to override defaults)
+    // SensorAnalog.setCalibrationHigh(0);
+    // SensorAnalog.setCalibrationLow(1024);
     SensorAnalog.loadCalibration();
     SensorAnalog.onDataReceived(handleDataReceived);
 
@@ -173,5 +180,5 @@ void showThreshold() {
       display.setValue(currentThreshold);
     #endif
 
-    delay(1000);
+    delay(800);
 }
