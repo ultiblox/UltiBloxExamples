@@ -1,118 +1,62 @@
-# Installation Guide
+# Installation Guide for UltiBlox Examples
 
-## 1. Cloning the Repository
+This guide provides instructions for installing the UltiBlox Examples library. You can install it via the Arduino Library Manager or manually for development and customization.
 
-To start, clone the UltiBlox repository to your local machine:
+---
 
-```bash
-git clone git@github.com:UltiBlox/UltiBloxExamples.git
-cd UltiBlox
-```
+## Option 1: Install via Arduino Library Manager (Recommended)
 
-## 2. Running the Prepare Script (for Library Installation)
+1. Open the **Arduino IDE**.
+2. Go to **Tools > Manage Libraries**.
+3. Search for **UltiBlox Examples** and click **Install**.
+4. Access example sketches under **File > Examples > UltiBlox Examples**.
 
-The **prepare.sh** script will automatically install the required libraries for the project, so you don't need to manually install them.
+---
 
-1. Run the `prepare.sh` script:
+## Option 2: Manual Installation (for Development and Customization)
 
-   ```bash
-   bash prepare.sh
-   ```
+### Step 1: Clone the Repository
 
-This will install the Arduino CLI (if not already installed) and ensure all necessary libraries are added to your Arduino `libraries` folder.
-
-## 3. Installation Modes
-
-### Direct Clone into Arduino Libraries Folder (Simple Install)
-
-This is the **easiest option** if you want to use the project without making any modifications.
-
-1. **Install Git** (if not installed):
-
-   ```bash
-   sudo apt update
-   sudo apt install git
-   ```
-
-2. **Clone the Repository Directly into Arduino Libraries Folder**:
-
-   ```bash
-   git clone git@github.com:UltiBlox/UltiBloxExamples.git ~/Arduino/libraries/UltiBlox
-   ```
-
-3. **Run the Prepare Script** to install any missing libraries:
-
-   ```bash
-   cd ~/Arduino/libraries/UltiBlox
-   bash prepare.sh
-   ```
-
-The project is now installed and ready for use in the Arduino IDE.
-
-### Cloning to a Workspace (For Development or Customization)
-
-If you're planning to **customize or develop** the project, you should clone it to a workspace outside the Arduino folder. Then, choose between these two options:
-
-#### a. Symlink Mode (For Active Development)
-
-This mode is best for developers who need to modify the project and test changes without copying files.
-
-1. **Clone the Project to a Workspace**:
-
-   ```bash
-   git clone git@github.com:UltiBlox/UltiBloxExamples.git ~/workspace/UltiBlox
-   cd ~/workspace/UltiBlox
-   ```
-
-2. **Create a Symlink to Arduino Libraries Folder**:
-
-   ```bash
-   bash install-symlink.sh
-   ```
-
-This links the project to the Arduino libraries folder without copying, so you can edit the project and see changes immediately.
-
-#### b. Standard Installation (Copy Mode)
-
-If you're not actively developing but want to install the project from a workspace, use this method.
-
-1. **Clone the Project to a Workspace**:
-
-   ```bash
-   git clone git@github.com:UltiBlox/UltiBloxExamples.git ~/workspace/UltiBlox
-   cd ~/workspace/UltiBlox
-   ```
-
-2. **Run the Install Script** to copy the project into the Arduino libraries folder:
-
-   ```bash
-   bash install.sh
-   ```
-
-## 4. Compiling and Uploading
-
-### Using the Arduino IDE
-
-1. Open the Arduino IDE and navigate to `File > Open`, then select the example sketch (e.g., `SensorControl.ino`).
-2. Install any missing libraries as prompted by the IDE.
-3. Select the appropriate board (e.g., Arduino Nano) and COM port under `Tools > Board` and `Tools > Port`.
-4. Compile and upload the sketch to your Arduino board.
-
-### Using Arduino CLI
-
-If you prefer to use the Arduino CLI, you can compile and upload the sketch with the following commands:
+Clone the repository to your workspace:
 
 ```bash
-arduino-cli compile --fqbn arduino:avr:nano examples/SensorControl/SensorControl.ino
-arduino-cli upload -p /dev/ttyUSB0 --fqbn arduino:avr:nano examples/SensorControl/SensorControl.ino
+git clone git@github.com:UltiBlox/UltiBloxExamples.git ~/workspace/UltiBloxExamples
+cd ~/workspace/UltiBloxExamples
 ```
 
-Be sure to replace `/dev/ttyUSB0` with the appropriate port for your board.
+### Step 2: Prepare the Environment
 
-## 5. Troubleshooting
+Run the `prepare.sh` script to set up `arduino-cli` and install necessary libraries:
 
-If you encounter issues, ensure the libraries are properly installed and that the correct board is selected in the Arduino IDE.
+```bash
+bash prepare.sh
+```
 
-- [Overview](overview.md)
-- [Libraries](libraries.md)
-- [Examples](examples.md)
+### Step 3: Install the Library
+
+To make `UltiBlox Examples` accessible in the Arduino IDE, use one of the following scripts:
+
+- **Copy Installation**:
+  ```bash
+  bash install.sh
+  ```
+
+- **Symlink Installation** (for active development):
+  ```bash
+  bash install-symlink.sh
+  ```
+
+### Step 4: Build and Compile Examples
+
+To compile all examples, use the `build.sh` script:
+
+```bash
+bash build.sh
+```
+
+---
+
+## Troubleshooting
+
+- **Library Not Detected**: Ensure the Arduino IDE is restarted after running installation scripts.
+- **Arduino CLI Not Found**: The `prepare.sh` script will install it if needed. For manual installation, see [Arduino CLI installation](https://arduino.github.io/arduino-cli/installation/).

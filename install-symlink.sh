@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Define the source path for the UniversalMakerBox library using a relative path
+# Define the source path for the UltiBloxExamples library using a relative path
 LIBRARY_PATH="$PWD"
 
 # Define the target path where the symlink will be created
 # This should be in a 'libraries' directory if adhering to Arduino project structure
-TARGET_PATH="/home/$USER/Arduino/libraries/UniversalMakerBox"
+TARGET_PATH="/home/$USER/Arduino/libraries/UltiBloxExamples"
 
 # Ensure the target directory exists
 mkdir -p $(dirname "${TARGET_PATH}")
