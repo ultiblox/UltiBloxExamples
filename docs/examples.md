@@ -1,51 +1,45 @@
-# Examples Overview
+# UltiBlox Examples Guide
 
-UltiBlox provides a set of modular examples that demonstrate how to use different hardware configurations, sensor readings, displays, and control mechanisms. Each example is designed to showcase specific features, making it easier for both beginners and experienced users to get started.
-
-### 1. **SensorControl**
-   - **Purpose**: Demonstrates how to read data from an analog sensor and control devices (like a pump or LED) based on sensor thresholds.
-   - **Key Features**:
-     - Read data from an analog sensor (e.g., soil moisture sensor).
-     - Configure thresholds to trigger control actions (e.g., turn on/off a pump).
-     - Logs sensor readings to the serial monitor.
-   - **Hardware**:
-     - Analog sensor (e.g., soil moisture sensor) connected to `A0`.
-     - Device control (e.g., pump, LED) connected to a digital pin.
-   - **Use Case**: Ideal for projects where you want to trigger actions based on sensor readings (e.g., automated watering system).
-
-### 2. **SensorDisplay**
-   - **Purpose**: Shows how to display sensor data on an LCD or OLED screen. It also includes calibration functionality to adjust sensor readings using two buttons.
-   - **Key Features**:
-     - Read sensor data and display it on an LCD or OLED screen.
-     - Calibrate the sensor using buttons to set low and high values.
-     - Logs sensor readings to the serial monitor for real-time feedback.
-   - **Hardware**:
-     - Analog sensor connected to `A0`.
-     - LCD or OLED display.
-     - Two buttons for sensor calibration (connected to pins `3` and `4`).
-   - **Use Case**: Useful for projects where you need to visually monitor sensor readings (e.g., displaying soil moisture levels).
-
-### 3. **SensorControlDisplay**
-   - **Purpose**: Combines both sensor control and display functionality. This example reads data from a sensor, displays the values on a screen, and controls a device based on sensor thresholds.
-   - **Key Features**:
-     - Combines the features of **SensorControl** and **SensorDisplay**.
-     - Read sensor data, display it, and control a device based on thresholds.
-     - Calibrate the sensor using buttons.
-     - Logs sensor data and actions to the serial monitor.
-   - **Hardware**:
-     - Analog sensor connected to `A0`.
-     - LCD or OLED display.
-     - Two buttons for calibration.
-     - Device control pin for managing external devices (e.g., a pump or LED).
-   - **Use Case**: Perfect for creating full-featured sensor monitoring systems that both display data and trigger actions.
+This guide provides an overview of the example sketches available in UltiBloxExamples. Each example demonstrates different ways to work with UltiBlox libraries. For further details on specific libraries used, please refer to their respective GitHub repositories.
 
 ---
 
-### How to Use the Examples
+## Available Examples
 
-Each example includes configuration files that allow you to customize the setup based on your hardware. Whether you are working with sensors, displays, or both, you can adapt these examples to fit your project needs.
+### SensorControl
+- **Purpose**: Demonstrates basic sensor control functionality with threshold activation using `ActiveThreshold`.
+- **Description**: Reads sensor inputs and controls outputs based on defined thresholds, with calibration through button presses.
+- **Related Libraries**: [SensorAnalog](https://github.com/ultiblox/SensorAnalog), [ActiveThreshold](https://github.com/ultiblox/ActiveThreshold)
 
-For details on how to configure the sensors, displays, buttons, and thresholds, check the respective configuration files included with each example:
-- **SensorConfig.h**: Configure sensor pins and intervals.
-- **DisplayConfig.h**: Select the type of display (LCD or OLED).
-- **ThresholdConfig.h**: Set sensor thresholds for control actions.
+### SensorDisplayLCD
+- **Purpose**: Outputs sensor data to an LCD screen.
+- **Description**: Displays sensor values on an LCD screen, useful for monitoring setups. Includes calibration buttons for setting sensor range.
+- **Related Libraries**: [DisplayValueLCD](https://github.com/ultiblox/DisplayValueLCD), [SensorAnalog](https://github.com/ultiblox/SensorAnalog)
+
+### SensorDisplayOLED
+- **Purpose**: Outputs sensor data to an OLED display.
+- **Description**: Similar to `SensorDisplayLCD` but outputs data on an OLED display for high-resolution readouts.
+- **Related Libraries**: [DisplayValueOLED](https://github.com/ultiblox/DisplayValueOLED), [SensorAnalog](https://github.com/ultiblox/SensorAnalog)
+
+### SensorControlDisplayLCD
+- **Purpose**: Combines sensor control with LCD display.
+- **Description**: Integrates control features from `SensorControl` and displays the data on an LCD screen. Allows threshold adjustments through button interactions.
+- **Related Libraries**: [DisplayValueLCD](https://github.com/ultiblox/DisplayValueLCD), [SensorAnalog](https://github.com/ultiblox/SensorAnalog), [ActiveThreshold](https://github.com/ultiblox/ActiveThreshold)
+
+---
+
+## Configuration and Customization
+
+Each example relies on configuration files like `SensorConfig.h`, `ThresholdConfig.h`, `DisplayConfig.h`, and `ControlConfig.h` to set parameters like sensor pins, threshold levels, and display settings. Refer to the library documentation for specific configuration options.
+
+---
+
+## Building the Examples
+
+To compile all examples, run the `build.sh` script:
+
+```bash
+bash build.sh
+```
+
+For further configuration options, refer to each library's GitHub page and configuration files as noted in each example's README.
