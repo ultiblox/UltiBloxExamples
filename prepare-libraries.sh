@@ -26,12 +26,13 @@ install_library() {
 arduino-cli lib install "U8g2"  # U8x8lib.h is part of the U8g2 library
 
 # Install all necessary libraries
-install_library "LCDI2C" "https://github.com/makers-multiverse/LCDI2C.git"
-install_library "SensorAnalog" "https://github.com/makers-multiverse/SensorAnalog.git"
-install_library "DisplayValueCommon" "https://github.com/makers-multiverse/DisplayValueCommon.git"
-install_library "DisplayValueLCD" "https://github.com/makers-multiverse/DisplayValueLCD.git"
-install_library "DisplayValueOLED" "https://github.com/makers-multiverse/DisplayValueOLED.git"
-install_library "SerialLogger" "https://github.com/makers-multiverse/SerialLogger.git"
+install_library "LCDI2C" "https://github.com/ultiblox/LCDI2C.git"
+install_library "SensorAnalog" "https://github.com/ultiblox/SensorAnalog.git"
+install_library "DisplayValueCommon" "https://github.com/ultiblox/DisplayValueCommon.git"
+install_library "DisplayValueLCD" "https://github.com/ultiblox/DisplayValueLCD.git"
+install_library "DisplayValueOLED" "https://github.com/ultiblox/DisplayValueOLED.git"
+install_library "SerialLogger" "https://github.com/ultiblox/SerialLogger.git"
+install_library "SensorAnalog" "https://github.com/ultiblox/ActiveThreshold.git"
 
 # Finish
 echo "Library preparation complete."
