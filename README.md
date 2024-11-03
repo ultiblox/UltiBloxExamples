@@ -27,6 +27,14 @@ With UltiBlox, users can create a variety of projects:
 - **Threshold-Based Automation**: Create a project where sensor thresholds control devices, like a pump or light that activates based on readings.
 - **Custom Projects**: Mix and match different libraries and components to create unique solutions tailored to specific needs. UltiBlox’s modular design lets you experiment, customize, and extend functionality across countless use cases.
 
+## Discussions
+
+- **[Discussions on GitHub](https://github.com/orgs/ultiblox/discussions)** 
+
+## Issues
+
+- **[Issues on GitHub](https://github.com/ultiblox/UltiBloxExamples/issues)** 
+
 ## Contributing
 
 We welcome contributions to UltiBlox! Whether you’d like to report an issue, suggest a feature, or contribute code, your help is appreciated. 
