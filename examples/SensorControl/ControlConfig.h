@@ -2,6 +2,6 @@
 #define ControlConfig_h
 
 // Pin number for controlling an output (e.g., LED, pump, relay)
-#define CONTROL_PIN 6  // Previously set to 6 for LED
+#define CONTROL_PIN 11
 
 #endif
