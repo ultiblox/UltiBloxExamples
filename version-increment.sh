@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Increment version and push new tag with updated library.properties file
+
 echo "Incrementing version..."
 
 # Fetch all tags
@@ -61,10 +63,18 @@ fi
 # Output the new version
 echo "New version: $new_version"
 
+# Update version in library.properties
+sed -i "s/^version=.*/version=$new_version/" library.properties
+
+echo "Updated library.properties to version $new_version"
+
+# Commit changes
+git add library.properties
+
+git commit -m "Update library.properties to version $new_version"
+
 # Create and push the new tag
-git tag "v${new_version}"
 git push origin main
 git push origin "v${new_version}"
 
-# Write the new version to VERSION file (if needed for reference)
 echo $new_version > VERSION
