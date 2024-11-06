@@ -24,6 +24,7 @@ install_library() {
 }
 
 arduino-cli lib install "U8g2"  # U8x8lib.h is part of the U8g2 library
+arduino-cli lib install "EasyButton"
 
 # Install all necessary libraries
 install_library "LCDI2C" "https://github.com/ultiblox/LCDI2C.git"
