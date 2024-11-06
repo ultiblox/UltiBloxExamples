@@ -63,6 +63,7 @@ echo "New version: $new_version"
 
 # Create and push the new tag
 git tag "v${new_version}"
+git push origin main
 git push origin "v${new_version}"
 
 # Write the new version to VERSION file (if needed for reference)
