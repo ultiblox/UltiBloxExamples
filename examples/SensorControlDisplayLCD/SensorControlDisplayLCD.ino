@@ -16,6 +16,9 @@
 #elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_OLED
     #include "DisplayValueOLED.h"
     DisplayValueOLED display;
+#elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_NONE
+    #include "DisplayValueNull.h"
+    DisplayValueNull display;  // Null display instance
 #endif
 
 // Initialize sensor, buttons, and threshold
