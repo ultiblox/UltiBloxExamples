@@ -70,11 +70,13 @@ echo "Updated library.properties to version $new_version"
 
 # Commit changes
 git add library.properties
-
 git commit -m "Update library.properties to version $new_version"
 
-# Create and push the new tag
+# Push main branch first
 git push origin main
+
+# Create and push the new tag
+git tag "v${new_version}"
 git push origin "v${new_version}"
 
 echo $new_version > VERSION
