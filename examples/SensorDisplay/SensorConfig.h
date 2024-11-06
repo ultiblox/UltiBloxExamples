@@ -1,4 +1,3 @@
-// SensorConfig.h
 #pragma once
 
 // Define sensor types
@@ -13,4 +12,6 @@ const char* const SENSOR_KEY = "L";   // Short key for the sensor reading
 
 #define SENSOR_PIN A0
 
-
+// Default calibration values for initial setup before manual calibration
+#define DEFAULT_CALIBRATION_LOW 0
+#define DEFAULT_CALIBRATION_HIGH 1024
