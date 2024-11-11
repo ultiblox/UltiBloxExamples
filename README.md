@@ -1,6 +1,6 @@
-# UltiBlox
+# UltiBlox Examples
 
-**UltiBlox** is an open-source, modular platform designed to simplify Arduino-based project development. By combining flexible hardware and software modules, UltiBlox enables quick prototyping and modular project builds. For more information, visit **[ultiblox.org](http://ultiblox.org)**.
+**UltiBlox** is an open-source, modular ecosystem designed to simplify Arduino-based project development. By combining flexible hardware and software modules, UltiBlox enables quick prototyping and modular project builds. For more information, visit **[ultiblox.org](http://ultiblox.org)**.
 
 ## Project Goals
 
