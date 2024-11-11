@@ -13,4 +13,9 @@ const char* const SENSOR_KEY = "M";   // Short key for the sensor reading
 
 #define SENSOR_PIN A0
 
+// #define DEFAULT_CALIBRATION_LOW 0
+// #define DEFAULT_CALIBRATION_HIGH 1024
+#define DEFAULT_CALIBRATION_LOW 476
+#define DEFAULT_CALIBRATION_HIGH 0
+
 
