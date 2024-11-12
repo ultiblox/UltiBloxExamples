@@ -6,25 +6,15 @@ This guide provides an overview of the example sketches available in UltiBloxExa
 
 ## Available Examples
 
-### SensorControl
-- **Purpose**: Demonstrates basic sensor control functionality with threshold activation using `ActiveThreshold`.
-- **Description**: Reads sensor inputs and controls outputs based on defined thresholds, with calibration through button presses.
-- **Related Libraries**: [SensorAnalog](https://github.com/ultiblox/SensorAnalog), [ActiveThreshold](https://github.com/ultiblox/ActiveThreshold)
+### SensorDisplay
+- **Purpose**: Outputs sensor data to an LCD or OLED screen.
+- **Description**: Displays sensor values on an LCD/OLED screen, useful for monitoring setups. Includes calibration buttons for setting sensor range.
+- **Related Libraries**:  [SensorAnalog](https://github.com/ultiblox/SensorAnalog), [DisplayValueLCD](https://github.com/ultiblox/DisplayValueLCD), [DisplayValueOLED](https://github.com/ultiblox/DisplayValueOLED), [DisplayValueNull](https://github.com/ultiblox/DisplayValueNull)
 
-### SensorDisplayLCD
-- **Purpose**: Outputs sensor data to an LCD screen.
-- **Description**: Displays sensor values on an LCD screen, useful for monitoring setups. Includes calibration buttons for setting sensor range.
-- **Related Libraries**: [DisplayValueLCD](https://github.com/ultiblox/DisplayValueLCD), [SensorAnalog](https://github.com/ultiblox/SensorAnalog)
-
-### SensorDisplayOLED
-- **Purpose**: Outputs sensor data to an OLED display.
-- **Description**: Similar to `SensorDisplayLCD` but outputs data on an OLED display for high-resolution readouts.
-- **Related Libraries**: [DisplayValueOLED](https://github.com/ultiblox/DisplayValueOLED), [SensorAnalog](https://github.com/ultiblox/SensorAnalog)
-
-### SensorControlDisplayLCD
-- **Purpose**: Combines sensor control with LCD display.
-- **Description**: Integrates control features from `SensorControl` and displays the data on an LCD screen. Allows threshold adjustments through button interactions.
-- **Related Libraries**: [DisplayValueLCD](https://github.com/ultiblox/DisplayValueLCD), [SensorAnalog](https://github.com/ultiblox/SensorAnalog), [ActiveThreshold](https://github.com/ultiblox/ActiveThreshold)
+### SensorControlDisplay
+- **Purpose**: Combines sensor control with LCD or OLED display.
+- **Description**: Integrates control features from `SensorControl` and displays the data on an LCD/OLED screen. Allows threshold adjustments through button interactions.
+- **Related Libraries**: [SensorAnalog](https://github.com/ultiblox/SensorAnalog), [DisplayValueLCD](https://github.com/ultiblox/DisplayValueLCD), [DisplayValueOLED](https://github.com/ultiblox/DisplayValueOLED), [DisplayValueNull](https://github.com/ultiblox/DisplayValueNull) [ActiveThreshold](https://github.com/ultiblox/ActiveThreshold)
 
 ---
 

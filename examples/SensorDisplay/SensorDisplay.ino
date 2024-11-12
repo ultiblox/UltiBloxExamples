@@ -10,25 +10,46 @@
 // Conditionally include and instantiate the correct display based on configuration
 #if ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_LCD
     #include "DisplayValueLCD.h"
-    DisplayValueLCD display(0x27, 16, 2);  // LCD I2C address and dimensions
+    DisplayValueLCD display(0x27, 16, 2);
 #elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_OLED
     #include "DisplayValueOLED.h"
-    DisplayValueOLED display;  // OLED instance
+    DisplayValueOLED display;
 #elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_NONE
     #include "DisplayValueNull.h"
     DisplayValueNull display;  // Null display instance
 #endif
 
-// Initialize sensor and buttons
-SensorAnalog sensor(SENSOR_PIN);
-EasyButton button1(BUTTON1_PIN);
-EasyButton button2(BUTTON2_PIN);
+// Initialize sensor, buttons, and threshold
+SensorAnalog sensor(SENSOR_PIN);  // Use SENSOR_PIN from SensorConfig.h
+EasyButton button1(BUTTON1_PIN);        // Use BUTTON1_PIN from ButtonConfig.h
+EasyButton button2(BUTTON2_PIN);        // Use BUTTON2_PIN from ButtonConfig.h
 
 void setup() {
     Logger.init(115200);
     Logger.infoln("Starting Sensor Display...");  // Initialize logger with message
 
-    // Log the display type for confirmation
+    Logger.init(115200);  // Initialize Serial communication
+    Logger.infoln("Starting...");
+
+    // Sensor configuration
+    sensor.setInterval(READING_INTERVAL);
+    sensor.setCalibrationDefaultHigh(DEFAULT_CALIBRATION_HIGH); // Set calibration defaults
+    sensor.setCalibrationDefaultLow(DEFAULT_CALIBRATION_LOW);
+    // NOTE: Directly setting calibration in code is not recommended. It will overwrite any changes made by the user.
+    // This should generally only be used for testing/debugging, or to reset calibration. For production, only set calibration 'defaults' in code.
+    // Set calibration in eeprom (to override defaults)
+    // sensor.setCalibrationHigh(0);
+    // sensor.setCalibrationLow(1024);
+    sensor.loadCalibration();
+    sensor.onDataReceived(handleDataReceived);
+
+    // Button configuration for calibration
+    button1.begin();
+    button1.onPressedFor(LONG_PRESS_DURATION, onPressedCalibrateLow);
+    button2.begin();
+    button2.onPressedFor(LONG_PRESS_DURATION, onPressedCalibrateHigh);
+
+    // Initialize the display
     #if ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_LCD
         Logger.debugln("Display type: LCD");
     #elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_OLED
@@ -36,17 +57,6 @@ void setup() {
     #elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_NONE
         Logger.debugln("Display type: None");
     #endif
-
-    sensor.setCalibrationDefaultLow(DEFAULT_CALIBRATION_LOW)        // Default low from config
-          .setCalibrationDefaultHigh(DEFAULT_CALIBRATION_HIGH)    // Default high from config
-          .loadCalibration()                  // Load saved calibration, or use defaults
-          .setInterval(READING_INTERVAL)      // Set reading interval
-          .onDataReceived(handleDataReceived); // Register data handler
-
-    button1.begin();
-    button1.onPressedFor(LONG_PRESS_DURATION, onPressedCalibrateLow);  // Button 1 for low calibration
-    button2.begin();
-    button2.onPressedFor(LONG_PRESS_DURATION, onPressedCalibrateHigh); // Button 2 for high calibration
 
     display.init();
     display.setLabel(SENSOR_LABEL);  // Initialize display with sensor label
@@ -57,8 +67,10 @@ void setup() {
 void loop() {
     button1.read();
     button2.read();
-    sensor.loop();  // Handle sensor updates
-    delay(10);      // Short delay for responsiveness
+
+    sensor.loop();  // Process sensor data
+
+    delay(10);
 }
 
 // Calibration function for setting the low point
@@ -91,11 +103,11 @@ void onPressedCalibrateHigh() {
     display.setSuffix("%");  // Restore main label and units
 }
 
-// Handle sensor data: log and display sensor readings
 void handleDataReceived(int value) {
     int rawValue = sensor.readRaw();
     Logger.data(SENSOR_LABEL, SENSOR_KEY, value);  // Calibrated value passed in
     Logger.data("Raw", "R", rawValue);             // Optional: logs the raw value for reference
     Logger.dataln();
+
     display.setValue(value);
 }

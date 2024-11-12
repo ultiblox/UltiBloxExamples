@@ -22,7 +22,7 @@
 #endif
 
 // Initialize sensor, buttons, and threshold
-SensorAnalog SensorAnalog(SENSOR_PIN);  // Use SENSOR_PIN from SensorConfig.h
+SensorAnalog sensor(SENSOR_PIN);  // Use SENSOR_PIN from SensorConfig.h
 EasyButton button1(BUTTON1_PIN);        // Use BUTTON1_PIN from ButtonConfig.h
 EasyButton button2(BUTTON2_PIN);        // Use BUTTON2_PIN from ButtonConfig.h
 ActiveThreshold threshold;              // ActiveThreshold instance
@@ -34,16 +34,16 @@ void setup() {
     Logger.infoln("Starting...");
 
     // Sensor configuration
-    SensorAnalog.setInterval(READING_INTERVAL);
-    SensorAnalog.setCalibrationDefaultHigh(DEFAULT_CALIBRATION_HIGH); // Set calibration defaults
-    SensorAnalog.setCalibrationDefaultLow(DEFAULT_CALIBRATION_LOW);
+    sensor.setInterval(READING_INTERVAL);
+    sensor.setCalibrationDefaultHigh(DEFAULT_CALIBRATION_HIGH); // Set calibration defaults
+    sensor.setCalibrationDefaultLow(DEFAULT_CALIBRATION_LOW);
     // NOTE: Directly setting calibration in code is not recommended. It will overwrite any changes made by the user.
     // This should generally only be used for testing/debugging, or to reset calibration. For production, only set calibration 'defaults' in code.
     // Set calibration in eeprom (to override defaults)
-    // SensorAnalog.setCalibrationHigh(0);
-    // SensorAnalog.setCalibrationLow(1024);
-    SensorAnalog.loadCalibration();
-    SensorAnalog.onDataReceived(handleDataReceived);
+    // sensor.setCalibrationHigh(0);
+    // sensor.setCalibrationLow(1024);
+    sensor.loadCalibration();
+    sensor.onDataReceived(handleDataReceived);
 
     // Button configuration for calibration
     button1.begin();
@@ -64,88 +64,67 @@ void setup() {
     // Initialize the display
     #if ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_LCD
         Logger.debugln("Display type: LCD");
-        display.init();
     #elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_OLED
         Logger.debugln("Display type: OLED");
-        display.init();
+    #elif ACTIVE_DISPLAY_TYPE == DISPLAY_TYPE_NONE
+        Logger.debugln("Display type: None");
     #endif
 
-    display.setLabel(SENSOR_LABEL);
-
-    delay(1000);
-
-    display.setSuffix("%");
+    display.init();
+    display.setLabel(SENSOR_LABEL);  // Initialize display with sensor label
+    display.setSuffix("%");         // Set unit suffix
+    delay(1000);                    // Allow setup time
 }
 
 void loop() {
     button1.read();
     button2.read();
 
-    SensorAnalog.loop();  // Process sensor data
+    sensor.loop();  // Process sensor data
 
     delay(10);
 }
 
-// Calibration for low point
+// Calibration function for setting the low point
 void onPressedCalibrateLow() {
-    int raw = SensorAnalog.readRaw();
-    
-    Logger.info("Calibrating sensor low: ");
+    int raw = sensor.readRaw();
+    Logger.info("Calibrating low point: ");
     Logger.infoln(raw);
-    
-    SensorAnalog.setCalibrationLow(raw);
+    sensor.setCalibrationLow(raw);
 
-    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
-      display.setLabel("Low");
-      display.setSuffix(" raw");
-      display.setValue(raw);
-    #endif
-
+    display.setLabel("Low");
+    display.setSuffix(" raw");
+    display.setValue(raw);
     delay(1000);
-
-    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
-      display.setLabel(SENSOR_LABEL);
-      display.setSuffix("%");
-    #endif
+    display.setLabel(SENSOR_LABEL);
+    display.setSuffix("%");  // Restore main label and units
 }
 
+// Calibration function for setting the high point
 void onPressedCalibrateHigh() {
-    int raw = SensorAnalog.readRaw();
-    
-    Logger.info("Calibrating sensor high: ");
+    int raw = sensor.readRaw();
+    Logger.info("Calibrating high point: ");
     Logger.infoln(raw);
-    
-    SensorAnalog.setCalibrationHigh(raw);
+    sensor.setCalibrationHigh(raw);
 
-    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
-      display.setLabel("High");
-      display.setSuffix(" raw");
-      display.setValue(raw);
-    #endif
-
+    display.setLabel("High");
+    display.setSuffix(" raw");
+    display.setValue(raw);
     delay(1000);
-
-    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
-      display.setLabel(SENSOR_LABEL);
-      display.setSuffix("%");
-    #endif
+    display.setLabel(SENSOR_LABEL);
+    display.setSuffix("%");  // Restore main label and units
 }
 
-// Handle sensor data and pass to ActiveThreshold for evaluation
 void handleDataReceived(int value) {
-    int rawValue = SensorAnalog.readRaw();
-
-    Logger.data(SENSOR_LABEL, SENSOR_KEY, value);
-    Logger.data("Raw", "R", rawValue);
+    int rawValue = sensor.readRaw();
+    Logger.data(SENSOR_LABEL, SENSOR_KEY, value);  // Calibrated value passed in
+    Logger.data("Raw", "R", rawValue);             // Optional: logs the raw value for reference
     Logger.dataln();
 
     // Evaluate sensor value with the threshold
     threshold.evaluate(value);
 
-    #if ACTIVE_DISPLAY_TYPE != DISPLAY_TYPE_NONE
-      display.setLabel(SENSOR_LABEL);
       display.setValue(value);
-    #endif
 }
 
 // Callback to turn on the control (e.g., LED, pump)
