@@ -8,8 +8,8 @@ This guide provides instructions for installing the UltiBlox Examples library. Y
 
 1. Open the **Arduino IDE**.
 2. Go to **Tools > Manage Libraries**.
-3. Search for **UltiBlox Examples** and click **Install**.
-4. Access example sketches under **File > Examples > UltiBlox Examples**.
+3. Search for **UltiBlox-Examples** and click **Install**.
+4. Access example sketches under **File > Examples > UltiBlox-Examples**.
 
 ---
 
@@ -34,7 +34,7 @@ bash prepare.sh
 
 ### Step 3: Install the Library
 
-To make `UltiBlox Examples` accessible in the Arduino IDE, use one of the following scripts:
+To make `UltiBlox-Examples` accessible in the Arduino IDE, use one of the following scripts:
 
 - **Copy Installation**:
   ```bash
