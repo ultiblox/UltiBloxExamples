@@ -1,6 +1,7 @@
 EasyButton
 ActiveThreshold,https://github.com/ultiblox/ActiveThreshold.git
 SerialLogger,https://github.com/ultiblox/SerialLogger.git
+SerialCommands,https://github.com/ultiblox/SerialCommands.git
 SensorAnalog,https://github.com/ultiblox/SensorAnalog.git
 DisplayValueLCD,https://github.com/ultiblox/DisplayValueLCD.git
 DisplayValueOLED,https://github.com/ultiblox/DisplayValueOLED.git
