@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 # Set the system-wide installation directory for Arduino CLI
 BINDIR="/usr/local/bin"
 CLI_VERSION="latest"  # Change to a specific version if needed

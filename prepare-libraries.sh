@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Path to dependencies.txt
 DEPENDENCIES_FILE="./dependencies.txt"
 PARENT_DIR=$(dirname "$(pwd)")

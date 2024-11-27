@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Run preparation scripts for Arduino CLI and libraries
 bash prepare-arduino-cli.sh || {
     echo "Error: Arduino CLI preparation failed."
