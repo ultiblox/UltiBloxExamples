@@ -1,15 +1,61 @@
-name: Build, Version, and Release
+name: Build, Test Consumers, and Release
 
 on:
   push:
     branches:
-      - main  # Trigger on main branch
+      - main  # Only trigger on main branch
 
 permissions:
   contents: write  # Required for tagging and creating releases
 
 jobs:
-  build-and-release:
+  test-install:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run Prepare Script
+      run: |
+        bash prepare.sh
+
+    - name: Create Arduino Libraries Directory
+      run: |
+        mkdir -p ~/Arduino/libraries
+
+    - name: Run Install Script
+      run: |
+        bash install.sh
+
+    - name: Verify Build
+      run: |
+        bash build.sh
+
+  test-install-symlink:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run Prepare Script
+      run: |
+        bash prepare.sh
+
+    - name: Create Arduino Libraries Directory
+      run: |
+        mkdir -p ~/Arduino/libraries
+
+    - name: Run Install Symlink Script
+      run: |
+        bash install-symlink.sh
+
+    - name: Verify Build
+      run: |
+        bash build.sh
+
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,26 +67,7 @@ jobs:
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-    - name: Install Arduino CLI
-      run: |
-        curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-        sudo mv bin/arduino-cli /usr/local/bin/
-
-    - name: Prepare environment
-      run: |
-        bash prepare.sh
-
-    - name: Install Arduino AVR Core
-      run: |
-        arduino-cli core update-index
-        arduino-cli core install arduino:avr
-
-    - name: Run Build Script
-      run: |
-        bash build.sh
-
     - name: Run Version Increment Script (Only if Build Succeeds)
-      if: ${{ success() }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |

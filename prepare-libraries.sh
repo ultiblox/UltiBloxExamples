@@ -1,39 +1,58 @@
 #!/bin/bash
 
-# Function to clone libraries if not already present and run their prepare scripts
-install_library() {
-  local LIBRARY_NAME="$1"
-  local LIBRARY_PATH="$HOME/Arduino/libraries/$LIBRARY_NAME"
-  local GIT_URL="$2"
+# Path to dependencies.txt
+DEPENDENCIES_FILE="./dependencies.txt"
+PARENT_DIR=$(dirname "$(pwd)")
 
-  if [ ! -d "$LIBRARY_PATH" ]; then
-    echo "Cloning $LIBRARY_NAME into Arduino libraries folder..."
-    git clone "$GIT_URL" "$LIBRARY_PATH"
+# Ensure dependencies.txt exists
+if [ ! -f "${DEPENDENCIES_FILE}" ]; then
+  echo "Error: dependencies.txt not found."
+  exit 1
+fi
 
-  else
-    echo "$LIBRARY_NAME already exists, skipping clone."
+echo "Preparing sibling libraries for UltiBloxExamples..."
+
+# Read and process each dependency from dependencies.txt
+while IFS=',' read -r LIB_NAME GIT_URL || [ -n "$LIB_NAME" ]; do
+  LIB_NAME=$(echo "${LIB_NAME}" | tr -d '\r' | sed 's/^[ \t]*//;s/[ \t]*$//')
+  GIT_URL=$(echo "${GIT_URL}" | tr -d '\r' | sed 's/^[ \t]*//;s/[ \t]*$//')
+
+  # Skip invalid or empty lines
+  if [[ -z "$LIB_NAME" || -z "$GIT_URL" ]]; then
+    echo "Skipping empty or invalid line"
+    continue
   fi
 
-  #  # Run prepare.sh if it exists
-  #  if [ -f "$LIBRARY_PATH/prepare.sh" ]; then
-  #    echo "Running $LIBRARY_NAME prepare script..."
-  #    bash "$LIBRARY_PATH/prepare.sh"
-  #  else
-  #    echo "No prepare script found for $LIBRARY_NAME."
-  #  fi
-}
+  echo ""
+  echo "Processing dependency: $LIB_NAME"
+  echo "  Dependency of: UltiBloxExamples"
 
-arduino-cli lib install "U8g2"  # U8x8lib.h is part of the U8g2 library
-arduino-cli lib install "EasyButton"
+  DEP_PATH="$PARENT_DIR/$LIB_NAME"
 
-# Install all necessary libraries
-install_library "LCDI2C" "https://github.com/ultiblox/LCDI2C.git"
-install_library "SensorAnalog" "https://github.com/ultiblox/SensorAnalog.git"
-install_library "DisplayValueLCD" "https://github.com/ultiblox/DisplayValueLCD.git"
-install_library "DisplayValueOLED" "https://github.com/ultiblox/DisplayValueOLED.git"
-install_library "DisplayValueNull" "https://github.com/ultiblox/DisplayValueNull.git"
-install_library "SerialLogger" "https://github.com/ultiblox/SerialLogger.git"
-install_library "ActiveThreshold" "https://github.com/ultiblox/ActiveThreshold.git"
+  if [ ! -d "${DEP_PATH}" ]; then
+    echo "Cloning $LIB_NAME into $PARENT_DIR..."
+    git clone "$GIT_URL" "$DEP_PATH" || {
+      echo "Error: Failed to clone $LIB_NAME. Skipping."
+      continue
+    }
+  else
+    echo "Updating $LIB_NAME..."
+    git -C "$DEP_PATH" pull || {
+      echo "Error: Failed to update $LIB_NAME. Skipping."
+      continue
+    }
+  fi
 
-# Finish
-echo "Library preparation complete."
+  # Run the library's prepare.sh if it exists
+  if [ -f "$DEP_PATH/prepare.sh" ]; then
+    echo "Running prepare.sh for $LIB_NAME..."
+    (cd "$DEP_PATH" && bash "prepare.sh") || {
+      echo "Error: Failed to prepare $LIB_NAME. Skipping."
+      continue
+    }
+  else
+    echo "No prepare.sh found for $LIB_NAME. Skipping preparation."
+  fi
+done < "$DEPENDENCIES_FILE"
+
+echo "Dependencies for UltiBloxExamples prepared successfully."
